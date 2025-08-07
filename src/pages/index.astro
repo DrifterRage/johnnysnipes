@@ -1,50 +1,1384 @@
----
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
----
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwoRoadsDayZ - Survive the Apocalypse</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPFMB30C0P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TPFMB30C0P');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0000 0%, #1a0000 25%, #2b0000 50%, #1a0000 75%, #0a0000 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Apocalyptic Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(220, 20, 20, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(205, 92, 92, 0.05) 0%, transparent 50%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="0.5" fill="%23dc1414" opacity="0.6"><animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/></circle><circle cx="80" cy="40" r="0.8" fill="%23b30000" opacity="0.7"><animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/></circle><circle cx="40" cy="80" r="0.3" fill="%23ff4444" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle><circle cx="60" cy="10" r="0.4" fill="%238b0000" opacity="0.4"><animate attributeName="opacity" values="0.4;1;0.4" dur="5s" repeatCount="indefinite"/></circle></svg>') repeat;
+            animation: apocalypticFloat 25s infinite linear;
+        }
+
+        @keyframes apocalypticFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            z-index: 1000;
+            border-bottom: 3px solid rgba(220, 20, 20, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        nav.scrolled {
+            background: rgba(26, 0, 0, 0.98);
+            box-shadow: 0 5px 30px rgba(220, 20, 20, 0.4);
+            border-bottom-color: rgba(220, 20, 20, 0.8);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #dc1414, #ff6b6b, #b30000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(220, 20, 20, 0.8);
+            filter: drop-shadow(0 0 10px rgba(220, 20, 20, 0.6));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #dc1414;
+            background: rgba(220, 20, 20, 0.1);
+            box-shadow: 0 0 20px rgba(220, 20, 20, 0.3);
+            border-color: rgba(220, 20, 20, 0.3);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(rgba(26,0,0,0.8), rgba(10,0,0,0.6)), url('/background.jpg') center/cover;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, transparent 0%, rgba(26,0,0,0.9) 100%),
+                linear-gradient(45deg, rgba(220, 20, 20, 0.1) 0%, transparent 30%, rgba(139, 0, 0, 0.1) 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #dc1414, #ff6b6b, #b30000, #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(220, 20, 20, 0.8);
+            animation: apocalypticGlow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 20px rgba(220, 20, 20, 0.6));
+        }
+
+        @keyframes apocalypticGlow {
+            from { 
+                filter: drop-shadow(0 0 20px rgba(220, 20, 20, 0.6)) brightness(1);
+                transform: scale(1);
+            }
+            to { 
+                filter: drop-shadow(0 0 40px rgba(220, 20, 20, 0.9)) brightness(1.1);
+                transform: scale(1.02);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.5s both;
+            color: #cd5c5c;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 0.9; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            margin: 0.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 2px solid transparent;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(220, 20, 20, 0.4);
+            border-color: rgba(220, 20, 20, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #b30000, #8b0000);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(220, 20, 20, 0.6);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #cd5c5c;
+            border: 2px solid #cd5c5c;
+            box-shadow: 0 10px 30px rgba(205, 92, 92, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(220, 20, 20, 0.9);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(220, 20, 20, 0.4);
+            border-color: #dc1414;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(220, 20, 20, 0.02) 0%, transparent 50%, rgba(139, 0, 0, 0.02) 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #dc1414, #cd5c5c, #b30000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(220, 20, 20, 0.5);
+            filter: drop-shadow(0 0 10px rgba(220, 20, 20, 0.4));
+            position: relative;
+        }
+
+        /* Server Info Cards */
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .server-card {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .server-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(220, 20, 20, 0.1), rgba(139, 0, 0, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .server-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.4);
+            border-color: rgba(220, 20, 20, 0.6);
+            background: rgba(26, 0, 0, 0.9);
+        }
+
+        .server-card:hover::before {
+            opacity: 1;
+        }
+
+        .server-card i {
+            font-size: 3rem;
+            color: #dc1414;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 0 20px rgba(220, 20, 20, 0.5);
+        }
+
+        .server-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        .server-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            color: #cd5c5c;
+        }
+
+        .server-info {
+            background: rgba(10, 0, 0, 0.6);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #dc1414;
+            box-shadow: inset 0 0 10px rgba(220, 20, 20, 0.2);
+        }
+
+        .server-info code {
+            background: rgba(220, 20, 20, 0.3);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #ff6b6b;
+            border: 1px solid rgba(220, 20, 20, 0.3);
+        }
+
+        /* Social Buttons */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-btn {
+            display: block;
+            padding: 2rem;
+            text-decoration: none;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .discord-btn {
+            background: linear-gradient(45deg, #7289da, #5865f2);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(114, 137, 218, 0.3);
+            border-color: rgba(114, 137, 218, 0.3);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(114, 137, 218, 0.5);
+            border-color: rgba(114, 137, 218, 0.6);
+        }
+
+        .youtube-btn {
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(220, 20, 20, 0.3);
+            border-color: rgba(220, 20, 20, 0.3);
+        }
+
+        .youtube-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.5);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        .social-btn i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-btn h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Store Items */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .store-item {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .store-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(220, 20, 20, 0.1), rgba(139, 0, 0, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .store-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.4);
+            border-color: rgba(220, 20, 20, 0.6);
+            background: rgba(26, 0, 0, 0.9);
+        }
+
+        .store-item:hover::before {
+            opacity: 1;
+        }
+
+        .store-item i {
+            font-size: 4rem;
+            color: #dc1414;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 0 20px rgba(220, 20, 20, 0.5);
+        }
+
+        .store-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        .store-item .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin: 1rem 0;
+            text-shadow: 0 0 15px rgba(220, 20, 20, 0.5);
+        }
+
+        .store-item .description {
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #cd5c5c;
+        }
+
+        .buy-btn {
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(45deg, #b30000, #8b0000);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 20, 20, 0.5);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        .coming-soon {
+            background: rgba(26, 0, 0, 0.5);
+            color: #666;
+            cursor: not-allowed;
+            border-color: rgba(102, 102, 102, 0.3);
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+            background: rgba(26, 0, 0, 0.5);
+        }
+
+        /* Staff Cards */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .staff-card {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(220, 20, 20, 0.1), rgba(139, 0, 0, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.4);
+            border-color: rgba(220, 20, 20, 0.6);
+            background: rgba(26, 0, 0, 0.9);
+        }
+
+        .staff-card:hover::before {
+            opacity: 1;
+        }
+
+        .staff-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 30px rgba(220, 20, 20, 0.4);
+            border: 3px solid rgba(220, 20, 20, 0.3);
+        }
+
+        .staff-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        .staff-role {
+            color: #dc1414;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        .staff-bio {
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #cd5c5c;
+        }
+
+        .owner-badge {
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+            border: 1px solid rgba(220, 20, 20, 0.3);
+            box-shadow: 0 0 15px rgba(220, 20, 20, 0.3);
+        }
+
+        /* Contact Form */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-form {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(220, 20, 20, 0.3);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(220, 20, 20, 0.4);
+            border-radius: 10px;
+            background: rgba(10, 0, 0, 0.6);
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #dc1414;
+            box-shadow: 0 0 20px rgba(220, 20, 20, 0.4);
+            background: rgba(10, 0, 0, 0.8);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #b30000, #8b0000);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(220, 20, 20, 0.5);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(10, 0, 0, 0.6);
+            border-radius: 10px;
+            border-left: 4px solid #dc1414;
+            box-shadow: inset 0 0 10px rgba(220, 20, 20, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #dc1414;
+            margin-right: 1rem;
+            width: 30px;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.5);
+        }
+
+        .contact-item-content h4 {
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 5px rgba(220, 20, 20, 0.3);
+        }
+
+        .contact-item-content p {
+            opacity: 0.9;
+            color: #cd5c5c;
+        }
+
+        /* Feedback Section */
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feedback-card {
+            background: rgba(26, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.4);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        .feedback-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .feedback-discord {
+            color: #7289da;
+        }
+
+        .feedback-email {
+            color: #dc1414;
+        }
+
+        .feedback-card h3 {
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(220, 20, 20, 0.3);
+            border: 2px solid rgba(220, 20, 20, 0.3);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(26, 0, 0, 0.3);
+            z-index: 9999;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #dc1414, #b30000, #8b0000);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(220, 20, 20, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .server-grid,
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #dc1414, #b30000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(220, 20, 20, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 2px solid rgba(220, 20, 20, 0.3);
+        }
+
+        .fab:hover {
+            background: linear-gradient(45deg, #b30000, #8b0000);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(220, 20, 20, 0.6);
+            border-color: rgba(220, 20, 20, 0.6);
+        }
+
+        /* Additional Apocalyptic Effects */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #dc1414, transparent);
+            margin: 4rem 0;
+            box-shadow: 0 0 10px rgba(220, 20, 20, 0.3);
+        }
+
+        /* Blood-like drip effect for section titles */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to bottom, #dc1414, transparent);
+            border-radius: 0 0 50% 50%;
+        }
+
+        /* Gritty texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(220, 20, 20, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Enhanced hover effects for interactive elements */
+        .server-card:hover,
+        .store-item:hover,
+        .staff-card:hover {
+            animation: subtlePulse 2s infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 20px 50px rgba(220, 20, 20, 0.4); }
+            50% { box-shadow: 0 25px 60px rgba(220, 20, 20, 0.5); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">TwoRoadsDayZ</div>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#join"><i class="fas fa-server"></i> Join</a></li>
+                <li><a href="#store"><i class="fas fa-shopping-cart"></i> Store</a></li>
+                <li><a href="#about"><i class="fas fa-info"></i> About</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="#community"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="#media"><i class="fas fa-play"></i> Media</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>TwoRoadsDayZ</h1>
+            <p>Survive, Raid, Dominate — The Apocalypse Awaits</p>
+            <a href="#join" class="btn btn-primary"><i class="fas fa-gamepad"></i> Join Server</a>
+            <a href="#community" class="btn btn-secondary"><i class="fab fa-discord"></i> Join Discord</a>
+        </div>
+    </section>
+
+    <!-- Server Join Section -->
+    <section id="join">
+        <div class="container">
+            <h2 class="section-title fade-in">Join the Apocalypse</h2>
+            <div class="section-divider"></div>
+            <div class="server-grid">
+                <div class="server-card fade-in">
+                    <i class="fas fa-crosshairs"></i>
+                    <h3>Quick Join</h3>
+                    <p>Search for our server in the DayZ Launcher and enter the wasteland:</p>
+                    <div class="server-info">
+                        <strong>TwoRoadsDayZ</strong>
+                    </div>
+                    <p>Simply search and click join to begin your survival!</p>
+                </div>
+                <div class="server-card fade-in">
+                    <i class="fas fa-satellite-dish"></i>
+                    <h3>Direct Connect</h3>
+                    <p>Connect directly using our server coordinates:</p>
+                    <div class="server-info">
+                        <p>IP: <code>115.42.46.213</code></p>
+                        <p>Port: <code>2312</code></p>
+                    </div>
+                    <p>Copy and paste into DayZ launcher for instant access!</p>
+                </div>
+                <div class="server-card fade-in">
+                    <i class="fas fa-skull-crossbones"></i>
+                    <h3>Survival Info</h3>
+                    <p>What awaits you in our apocalyptic world:</p>
+                    <div class="server-info">
+                        <p>• High-Stakes PvP</p>
+                        <p>• Active Threats</p>
+                        <p>• Scarce Resources</p>
+                        <p>• No Mercy Zone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store">
+        <div class="container">
+            <h2 class="section-title fade-in">Survival Supplies</h2>
+            <div class="section-divider"></div>
+            <p style="text-align: center; font-size: 1.2rem; opacity: 0.8; margin-bottom: 3rem; color: #cd5c5c;" class="fade-in">
+                Acquire essential gear to survive the harsh wasteland. All proceeds fund our apocalyptic sanctuary!
+            </p>
+            <div class="store-grid">
+                <div class="store-item fade-in">
+                    <i class="fas fa-medkit"></i>
+                    <h3>Emergency Kit</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Basic survival supplies with food, water, and medical gear to keep you alive longer.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+                <div class="store-item fade-in">
+                    <i class="fas fa-wrench"></i>
+                    <h3>Scavenger Tools</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Essential tools for looting and repairs. Hammer, saw, and scavenged materials.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+                <div class="store-item fade-in">
+                    <i class="fas fa-vest"></i>
+                    <h3>Combat Gear</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Protective equipment including tactical vest, helmet, and field bandages.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+                <div class="store-item fade-in">
+                    <i class="fas fa-car-crash"></i>
+                    <h3>Vehicle Salvage</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Random salvaged vehicle parts to get you mobile in the wasteland faster.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+                <div class="store-item fade-in">
+                    <i class="fas fa-syringe"></i>
+                    <h3>Field Medic Pack</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Advanced medical supplies: blood bags, morphine, antibiotics, and disinfectant.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+                <div class="store-item fade-in">
+                    <i class="fas fa-home"></i>
+                    <h3>Fortress Starter</h3>
+                    <div class="price">$1.00</div>
+                    <div class="description">Fortification materials and basic furniture to establish your safe zone.</div>
+                    <a href="#" class="buy-btn coming-soon">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title fade-in">Survivors in Command</h2>
+            <div class="section-divider"></div>
+            <div class="staff-grid">
+                <div class="staff-card fade-in">
+                    <div class="owner-badge">APOCALYPSE COMMANDER</div>
+                    <div class="staff-avatar">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <h3>Johnny Snipes</h3>
+                    <div class="staff-role">Founder & Overlord</div>
+                    <div class="staff-bio">
+                        Creator of TwoRoadsDayZ wasteland. Forged this brutal survival experience from the ashes of civilization. Constantly evolving the apocalypse and responding to survivor feedback.
+                    </div>
+                </div>
+                <div class="staff-card fade-in">
+                    <div class="staff-avatar">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <h3>Jax</h3>
+                    <div class="staff-role">Enforcer</div>
+                    <div class="staff-bio">
+                        Iron-fisted enforcer who maintains order in chaos. Hunts down cheaters and griefers while keeping the wasteland fair for all survivors. No mercy for rule breakers.
+                    </div>
+                </div>
+                <div class="staff-card fade-in">
+                    <div class="staff-avatar">
+                        <i class="fas fa-radiation"></i>
+                    </div>
+                    <h3>Flux</h3>
+                    <div class="staff-role">Zone Warden</div>
+                    <div class="staff-bio">
+                        Maintains the delicate balance between survival and slaughter. Quick to respond to distress calls and ensures every survivor gets their fair chance at apocalyptic glory.
+                    </div>
+                </div>
+                <div class="staff-card fade-in">
+                    <div class="staff-avatar">
+                        <i class="fas fa-biohazard"></i>
+                    </div>
+                    <h3>Moderator Name</h3>
+                    <div class="staff-role">Community Survivor</div>
+                    <div class="staff-bio">
+                        Veteran survivor who guides new wasteland wanderers, moderates survivor communications, and organizes deadly server events. Your first contact in the apocalypse.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get in Touch</h2>
+            <div class="section-divider"></div>
+            <div class="contact-container">
+                <div class="contact-grid">
+                    <div class="contact-info fade-in">
+                        <h3 style="margin-bottom: 2rem; color: #fff;">Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-item-content">
+                                <h4>Email Us</h4>
+                                <p>TwoRoadsDayZ@mail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-discord"></i>
+                            <div class="contact-item-content">
+                                <h4>Discord Support</h4>
+                                <p>Join our server for instant help</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="contact-item-content">
+                                <h4>Response Time</h4>
+                                <p>Usually within 24 hours</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-headset"></i>
+                            <div class="contact-item-content">
+                                <h4>Support Topics</h4>
+                                <p>Server issues, Store questions, Discord help, Technical support</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form fade-in">
+                        <h3 style="margin-bottom: 2rem; color: #fff;">Send us a Message</h3>
+                        <form action="mailto:TwoRoadsDayZ@mail.com" method="post" enctype="text/plain">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a topic...</option>
+                                    <option value="Server Issues">Server Issues</option>
+                                    <option value="Store Questions">Store Questions</option>
+                                    <option value="Discord Help">Discord Help</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Bug Report">Bug Report</option>
+                                    <option value="Suggestion">Suggestion</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="Please describe your issue or question in detail..." required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="community">
+        <div class="container">
+            <h2 class="section-title fade-in">Join the Resistance</h2>
+            <div class="section-divider"></div>
+            <div class="social-grid">
+                <a href="https://discord.gg/CvRctFATVR" target="_blank" class="social-btn discord-btn fade-in">
+                    <i class="fab fa-discord"></i>
+                    <h3>Survivor Discord</h3>
+                    <p>Connect with fellow survivors, share intel, and coordinate raids!</p>
+                </a>
+                <a href="https://www.youtube.com/watch?v=2Fyt6KweRVc" target="_blank" class="social-btn youtube-btn fade-in">
+                    <i class="fab fa-youtube"></i>
+                    <h3>Apocalypse Archives</h3>
+                    <p>Watch survival footage, combat tutorials, and wasteland chronicles!</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Section -->
+    <section id="media">
+        <div class="container">
+            <h2 class="section-title fade-in">Wasteland Footage</h2>
+            <div class="section-divider"></div>
+            <div class="video-container fade-in">
+                <iframe src="https://www.youtube.com/embed/2Fyt6KweRVc" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button -->
+    <a href="#home" class="fab">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <script>
+        // Smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll progress indicator
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                scrollProgress.style.width = scrolled + '%';
+                
+                // Navbar background change
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Fade in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add some interactive particle effects
+            const hero = document.querySelector('.hero');
+            hero.addEventListener('mousemove', (e) => {
+                const rect = hero.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                hero.style.background = `
+                    radial-gradient(circle at ${x}px ${y}px, rgba(220, 20, 20, 0.1) 0%, transparent 50%),
+                    linear-gradient(rgba(26,0,0,0.8), rgba(10,0,0,0.6)),
+                    url('/background.jpg') center/cover
+                `;
+            });
+            
+            // Add event tracking for store items
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemName = this.closest('.store-item').querySelector('h3').textContent;
+                    gtag('event', 'click', {
+                        'event_category': 'Store',
+                        'event_label': itemName
+                    });
+                });
+            });
+
+            // Track contact form submissions
+            const contactForm = document.querySelector('form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function() {
+                    gtag('event', 'submit', {
+                        'event_category': 'Contact',
+                        'event_label': 'Contact_Form_Submit'
+                    });
+                });
+            }
+
+            // Track server join button clicks
+            document.querySelectorAll('a[href="#join"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gtag('event', 'click', {
+                        'event_category': 'Navigation',
+                        'event_label': 'Join_Server_Button'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
 </html>
